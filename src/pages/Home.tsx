@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react';
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay },
+  transition: { duration: 0.6, ease: "easeOut" as const, delay },
 });
 
 const DEMO_DROPS = [

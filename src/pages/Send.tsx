@@ -85,21 +85,21 @@ function Step1({ onNext }: { onNext: () => void }) {
 // ── Step 2: Recipient ────────────────────────────
 function Step2({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
   const { type, recipientName, setRecipientName, recipientPhone, setRecipientPhone, deliveryMethod, setDeliveryMethod } = useOrderStore();
-  
+
   useEffect(() => {
     if (type === 'prank' && !deliveryMethod) setDeliveryMethod('in_person');
   }, [type, deliveryMethod, setDeliveryMethod]);
 
   const isPhoneValid = /^09\d{8}$/.test(recipientPhone);
-  const isValid = type === 'prank' && deliveryMethod === 'phone_call' 
-    ? isPhoneValid 
+  const isValid = type === 'prank' && deliveryMethod === 'phone_call'
+    ? isPhoneValid
     : recipientName.trim().length > 0;
 
   return (
     <>
       <h2 className="form-title">Who receives it?</h2>
       <p className="form-subtitle">Their {type === 'prank' && deliveryMethod === 'phone_call' ? 'phone number' : 'name'} is only used {type === 'prank' && deliveryMethod === 'phone_call' ? 'to call them' : 'to find them'}. Nothing is stored publicly.</p>
-      
+
       {type === 'prank' && (
         <div className="form-row" style={{ marginBottom: 24 }}>
           <label className="label">Delivery Method</label>
@@ -175,7 +175,7 @@ function Step3({ onNext, onBack, onJumpTo5 }: { onNext: () => void; onBack: () =
 // ── Step 4: Location & Physical Message ──────────
 function Step4({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
   const { location, setLocation, type, prankMessage, setPrankMessage } = useOrderStore();
-  
+
   return (
     <>
       <h2 className="form-title">Where exactly?</h2>
@@ -192,7 +192,7 @@ function Step4({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
           autoFocus
         />
       </div>
-      
+
       {type === 'prank' && (
         <div className="form-row" style={{ marginTop: 20 }}>
           <label className="label">The Insult (Written Note)</label>
@@ -205,7 +205,7 @@ function Step4({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
           It makes the process easier when they're actually there when it arrives. Pick a place and a moment you know they'll be at.
         </div>
       )}
-      
+
       <div className="form-actions">
         <button className="btn btn-ghost" onClick={onBack} id="step4-back">Back</button>
         <button className="btn btn-rose" onClick={onNext} disabled={!location.trim() || (type === 'prank' && !prankMessage.trim())} id="step4-next">Continue</button>
@@ -361,7 +361,7 @@ function SuccessScreen() {
       <div className="success-icon">{type === 'rose' ? '🌹' : type === 'thorn' ? '🥀' : '🎭'}</div>
       <h2 className="success-title">Order Placed</h2>
       <p className="success-desc">
-        Your {type} is queued for delivery on {deliveryDay} 
+        Your {type} is queued for delivery on {deliveryDay}
         {type === 'prank' && deliveryMethod === 'phone_call' ? ' via Phone Call' : ` at ${campus}`}.
         We'll process it after payment confirmation. They'll never know it was you.
       </p>
@@ -405,7 +405,7 @@ export function Send() {
         recipientPhone: type === 'prank' && deliveryMethod === 'phone_call' ? recipientPhone : undefined,
         campus: (type === 'prank' && deliveryMethod === 'phone_call') ? 'Phone' : campus,
         location: (type === 'prank' && deliveryMethod === 'phone_call') ? 'Phone' : location,
-        deliveryMethod: type === 'prank' ? deliveryMethod : undefined,
+        deliveryMethod: type === 'prank' ? (deliveryMethod || undefined) : undefined,
         prankMessage: type === 'prank' ? prankMessage : undefined,
         deliveryDay,
         timeWindow,
