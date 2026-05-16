@@ -3,11 +3,11 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useOrderStore } from '../store/orderStore';
 import { createOrder } from '../lib/firestore';
-import type { OrderType, TimeWindow } from '../lib/firestore';
+import type { OrderType } from '../lib/firestore';
 
 const CAMPUSES = ['AAU 6 ⚖️', 'AAU 4 ⚖️', 'AAU 5 ⚖️', 'EIABC', 'UNITY Campus'];
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Friday', 'Saturday', 'Sunday'];
-const ACTIVE_DAY = 'Friday';
+// const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Friday', 'Saturday', 'Sunday'];
+// const ACTIVE_DAY = 'Friday';
 const TOTAL_STEPS = 5;
 
 function StepProgress({ step }: { step: number }) {
@@ -298,7 +298,7 @@ function Step5({ onSubmit, onBack, loading }: { onSubmit: () => void; onBack: ()
 
 // ── Success ──────────────────────────────────────
 function SuccessScreen() {
-  const { type, campus, deliveryDay, reset, deliveryMethod } = useOrderStore();
+  const { type, reset } = useOrderStore();
   const navigate = useNavigate();
   return (
     <div className="success-screen">
@@ -322,7 +322,7 @@ function SuccessScreen() {
 // ── Main Send page ───────────────────────────────
 export function Send() {
   const [searchParams] = useSearchParams();
-  const { step, setStep, nextStep, prevStep, setType, type, recipientName, recipientPhone, campus, location, senderPhone, setSubmittedOrderId, submittedOrderId, deliveryMethod, prankMessage } = useOrderStore();
+  const { step, setStep, nextStep, prevStep, setType, type, recipientName, recipientPhone, campus, location, senderPhone, setSubmittedOrderId, submittedOrderId, deliveryMethod, prankMessage, deliveryDay, timeWindow } = useOrderStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -347,6 +347,8 @@ export function Send() {
         recipientPhone: type === 'prank' && deliveryMethod === 'phone_call' ? recipientPhone : undefined,
         campus: (type === 'prank' && deliveryMethod === 'phone_call') ? 'Phone' : campus,
         location: (type === 'prank' && deliveryMethod === 'phone_call') ? 'Phone' : location,
+        deliveryDay,
+        timeWindow,
         deliveryMethod: type === 'prank' ? (deliveryMethod || undefined) : undefined,
         prankMessage: type === 'prank' ? prankMessage : undefined,
         senderPhone,
