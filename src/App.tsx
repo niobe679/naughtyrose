@@ -19,7 +19,7 @@ export default function App() {
         <Route path="/feed" element={<Feed />} />
         <Route path="/courier" element={<Courier />} />
         <Route path="/about" element={<About />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/HandNadmins" element={<Admin />} />
       </Routes>
       <Footer />
     </BrowserRouter>

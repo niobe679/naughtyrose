@@ -8,7 +8,7 @@ import type { OrderType, TimeWindow } from '../lib/firestore';
 const CAMPUSES = ['AAU 6 ⚖️', 'AAU 4 ⚖️', 'AAU 5 ⚖️', 'EIABC', 'UNITY Campus'];
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Friday', 'Saturday', 'Sunday'];
 const ACTIVE_DAY = 'Friday';
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 5;
 
 function StepProgress({ step }: { step: number }) {
   return (
@@ -54,6 +54,7 @@ function Step1({ onNext }: { onNext: () => void }) {
           <div className="choice-title">Thorn</div>
           <div className="choice-desc">For someone who caused you pain.</div>
         </motion.div>
+        {/* PRANK FEATURE ACTIVATION PENDING
         <motion.div
           className={`choice-card prank-card ${type === 'prank' ? 'selected' : ''}`}
           onClick={() => setType('prank')}
@@ -66,6 +67,7 @@ function Step1({ onNext }: { onNext: () => void }) {
           <div className="choice-title">Prank</div>
           <div className="choice-desc">A written insult delivered in-person or via phone call.</div>
         </motion.div>
+        */}
       </div>
       <div className="form-actions" style={{ marginTop: 28 }}>
         <button
@@ -181,12 +183,12 @@ function Step4({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
       <h2 className="form-title">Where exactly?</h2>
       <p className="form-subtitle">Be as specific as possible about the location.</p>
       <div className="form-row">
-        <label className="label" htmlFor="delivery-location">Exact Location</label>
-        <input
+        <label className="label" htmlFor="delivery-location">Exact Location & Time</label>
+        <textarea
           id="delivery-location"
           className="input-field"
-          type="text"
-          placeholder="e.g. Main library entrance, Building A cafeteria..."
+          rows={4}
+          placeholder="Specify the exact location, day, and time you expect them to be there. (e.g. Friday 3:00 PM at Main Library entrance)"
           value={location}
           onChange={e => setLocation(e.target.value)}
           autoFocus
@@ -214,67 +216,8 @@ function Step4({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
   );
 }
 
-// ── Step 5: Delivery day & time window ──────────
-function Step5({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
-  const { deliveryDay, timeWindow, setDeliveryDay, setTimeWindow } = useOrderStore();
-  return (
-    <>
-      <h2 className="form-title">When should it drop?</h2>
-      <p className="form-subtitle">Pick your delivery day and time window.</p>
-
-      <div className="form-row">
-        <label className="label">Delivery Day</label>
-        <div className="option-grid">
-          {DAYS.map(d => (
-            <button
-              key={d}
-              type="button"
-              className={`option-item ${deliveryDay === d ? 'selected' : ''} ${d !== ACTIVE_DAY ? 'disabled' : ''}`}
-              onClick={() => d === ACTIVE_DAY && setDeliveryDay(d)}
-              disabled={d !== ACTIVE_DAY}
-              id={`day-${d.toLowerCase()}`}
-            >
-              {d}
-              {d === ACTIVE_DAY && <span style={{ display: 'block', fontSize: 10, color: 'var(--rose-bright)', marginTop: 2 }}>Active</span>}
-            </button>
-          ))}
-        </div>
-        <p style={{ fontSize: 12, color: 'var(--text-dim)', marginTop: 10, fontStyle: 'italic' }}>
-          Currently we only deliver on Friday. We won't confuse you with a messed up AM/PM system.
-        </p>
-      </div>
-
-      <div className="form-row">
-        <label className="label">Time Window</label>
-        <div className="time-grid">
-          {([
-            { id: 'day', icon: '☀️', label: 'During the day', desc: 'Morning to early evening' },
-            { id: 'night', icon: '🌙', label: 'During the night time', desc: 'Evening onwards' },
-          ] as { id: TimeWindow; icon: string; label: string; desc: string }[]).map(t => (
-            <div
-              key={t.id}
-              className={`time-card ${timeWindow === t.id ? 'selected' : ''}`}
-              onClick={() => setTimeWindow(t.id)}
-              id={`time-${t.id}`}
-            >
-              <div className="time-icon">{t.icon}</div>
-              <div className="time-label">{t.label}</div>
-              <div className="time-desc">{t.desc}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="form-actions">
-        <button className="btn btn-ghost" onClick={onBack} id="step5-back">Back</button>
-        <button className="btn btn-rose" onClick={onNext} disabled={!deliveryDay} id="step5-next">Continue</button>
-      </div>
-    </>
-  );
-}
-
-// ── Step 6: Payment ──────────────────────────────
-function Step6({ onSubmit, onBack, loading }: { onSubmit: () => void; onBack: () => void; loading: boolean }) {
+// ── Step 5: Payment ──────────────────────────────
+function Step5({ onSubmit, onBack, loading }: { onSubmit: () => void; onBack: () => void; loading: boolean }) {
   const { senderPhone, setSenderPhone, recipientName, recipientPhone, type, deliveryMethod } = useOrderStore();
   const orderId = `NR${Date.now().toString(36).toUpperCase()}`;
   const paymentRef = `D2${orderId}${senderPhone.replace(/\D/g, '')}`;
@@ -329,9 +272,10 @@ function Step6({ onSubmit, onBack, loading }: { onSubmit: () => void; onBack: ()
       </div>
 
       <div className="telebirr-note">
-        <p style={{ marginBottom: 6 }}>When sending on <u>Telebirr</u>, add a note that includes:</p>
-        <p>• Your phone number</p>
-        <p>• Recipient: <strong>{displayName || '[recipient info]'}</strong></p>
+        <p style={{ marginBottom: 6 }}><strong>When sending on <u>Telebirr</u>, add a note that includes:</strong></p>
+        <p><strong>• Your phone number</strong></p>
+        <p><strong>• Recipient: {displayName || '[recipient info]'}</strong></p>
+        <p style={{ marginTop: 12, color: 'var(--text)' }}><strong>📸 After completing the transfer, please send the payment screenshot via WhatsApp to 0992496445!</strong></p>
         <p style={{ marginTop: 8, fontSize: 12, color: 'var(--text-dim)' }}>
           Note: Telebirr does not show your full phone number — your identity stays protected.
         </p>
@@ -361,9 +305,7 @@ function SuccessScreen() {
       <div className="success-icon">{type === 'rose' ? '🌹' : type === 'thorn' ? '🥀' : '🎭'}</div>
       <h2 className="success-title">Order Placed</h2>
       <p className="success-desc">
-        Your {type} is queued for delivery on {deliveryDay}
-        {type === 'prank' && deliveryMethod === 'phone_call' ? ' via Phone Call' : ` at ${campus}`}.
-        We'll process it after payment confirmation. They'll never know it was you.
+        Your {type} is queued for delivery. We'll process it after payment confirmation. They'll never know it was you.
       </p>
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginTop: 8 }}>
         <button className="btn btn-ghost" onClick={() => { reset(); navigate('/'); }} id="success-home">
@@ -380,7 +322,7 @@ function SuccessScreen() {
 // ── Main Send page ───────────────────────────────
 export function Send() {
   const [searchParams] = useSearchParams();
-  const { step, setStep, nextStep, prevStep, setType, type, recipientName, recipientPhone, campus, location, deliveryDay, timeWindow, senderPhone, setSubmittedOrderId, submittedOrderId, deliveryMethod, prankMessage } = useOrderStore();
+  const { step, setStep, nextStep, prevStep, setType, type, recipientName, recipientPhone, campus, location, senderPhone, setSubmittedOrderId, submittedOrderId, deliveryMethod, prankMessage } = useOrderStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -407,8 +349,6 @@ export function Send() {
         location: (type === 'prank' && deliveryMethod === 'phone_call') ? 'Phone' : location,
         deliveryMethod: type === 'prank' ? (deliveryMethod || undefined) : undefined,
         prankMessage: type === 'prank' ? prankMessage : undefined,
-        deliveryDay,
-        timeWindow,
         senderPhone,
         paymentRef: `D2NR${Date.now().toString(36).toUpperCase()}${senderPhone.replace(/\D/g, '')}`,
       });
@@ -453,15 +393,14 @@ export function Send() {
                 {step === 1 && <Step1 onNext={nextStep} />}
                 {step === 2 && <Step2 onNext={nextStep} onBack={prevStep} />}
                 {step === 3 && <Step3 onNext={nextStep} onBack={prevStep} onJumpTo5={() => setStep(5)} />}
-                {step === 4 && <Step4 onNext={nextStep} onBack={() => {
+                {step === 4 && <Step4 onNext={() => setStep(5)} onBack={() => {
                   if (type === 'prank' && deliveryMethod === 'phone_call') setStep(3);
                   else prevStep();
                 }} />}
-                {step === 5 && <Step5 onNext={nextStep} onBack={() => {
+                {step === 5 && <Step5 onSubmit={handleSubmit} onBack={() => {
                   if (type === 'prank' && deliveryMethod === 'phone_call') setStep(3);
-                  else prevStep();
-                }} />}
-                {step === 6 && <Step6 onSubmit={handleSubmit} onBack={prevStep} loading={loading} />}
+                  else setStep(4);
+                }} loading={loading} />}
               </motion.div>
             </AnimatePresence>
           )}

@@ -8,15 +8,6 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.6, ease: "easeOut" as const, delay },
 });
 
-const DEMO_DROPS = [
-  { type: 'rose', campus: 'AAU 6', location: 'Library', time: 'Friday 2:14 PM' },
-  { type: 'thorn', campus: 'EIABC', location: 'Cafeteria', time: 'Friday 11:42 AM' },
-  { type: 'rose', campus: 'UNITY Campus', location: 'Gate', time: 'Friday 3:05 PM' },
-  { type: 'thorn', campus: 'AAU 4', location: 'Classroom Building', time: 'Friday 1:30 PM' },
-  { type: 'prank', campus: 'AAU 5', location: 'Phone Call', time: 'Friday 2:00 PM' },
-  { type: 'rose', campus: 'AAU 5', location: 'Library', time: 'Friday 4:00 PM' },
-];
-
 export function Home() {
   return (
     <main>
@@ -43,7 +34,7 @@ export function Home() {
 
         <div style={{ position: 'relative', zIndex: 1 }}>
           <motion.p className="hero-eyebrow" {...fadeUp(0)}>
-            anonymous campus deliveries
+            anonymous deliveries
           </motion.p>
 
           <motion.h1 className="hero-title" {...fadeUp(0.1)}>
@@ -61,9 +52,11 @@ export function Home() {
             <Link to="/send?item=thorn" className="btn btn-thorn" id="hero-send-thorn">
               🥀 Send a Thorn
             </Link>
+            {/* PRANK FEATURE ACTIVATION PENDING
             <Link to="/send?item=prank" className="btn btn-ghost" id="hero-send-prank" style={{ borderColor: 'rgba(138,43,226,0.5)', color: '#b683e6' }}>
               🎭 Send a Prank
             </Link>
+            */}
           </motion.div>
         </div>
       </section>
@@ -99,25 +92,15 @@ export function Home() {
             </Link>
           </div>
 
-          <div className="feed-grid">
-            {DEMO_DROPS.map((d, i) => (
-              <motion.div
-                key={i}
-                className="drop-card"
-                initial={{ opacity: 0, x: -16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.07 }}
-                viewport={{ once: true }}
-              >
-                <span className="drop-badge">{d.type === 'rose' ? '🌹' : d.type === 'thorn' ? '🥀' : '🎭'}</span>
-                <div className="drop-info">
-                  <p className="drop-label">
-                    <strong>{d.type.charAt(0).toUpperCase() + d.type.slice(1)} delivered</strong> — {d.campus} {d.location && `— ${d.location}`}
-                  </p>
-                  <p className="drop-time">{d.time}</p>
-                </div>
-              </motion.div>
-            ))}
+          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', textAlign: 'center', marginTop: '40px', flexWrap: 'wrap' }}>
+            <div style={{ padding: '30px', background: 'rgba(255, 42, 95, 0.1)', borderRadius: '16px', flex: '1 1 200px' }}>
+              <h3 style={{ fontSize: '48px', color: 'var(--rose-bright)' }}>1,492</h3>
+              <p style={{ color: 'var(--text-muted)' }}>Roses Delivered</p>
+            </div>
+            <div style={{ padding: '30px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '16px', flex: '1 1 200px' }}>
+              <h3 style={{ fontSize: '48px', color: '#888' }}>847</h3>
+              <p style={{ color: 'var(--text-muted)' }}>Thorns Delivered</p>
+            </div>
           </div>
         </div>
       </section>
