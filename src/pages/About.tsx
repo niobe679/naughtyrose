@@ -19,7 +19,7 @@ const RULES = [
   },
   {
     title: 'Campus Only',
-    body: 'naughtyrose69 operates exclusively within Ethiopian university campuses. AAU 6, AAU 4, AAU 5, EIABC, and UNITY Campus.',
+    body: 'naughtyrose operates exclusively within Ethiopian university campuses. AAU 6, AAU 4, AAU 5, EIABC, and UNITY Campus.',
   },
   {
     title: 'Safety Is Sacred',
@@ -27,7 +27,7 @@ const RULES = [
   },
   {
     title: 'Courier Discretion',
-    body: 'Couriers are bound to full discretion. They never reveal or hint at who sent it. Violation ends employment immediately.',
+    body: 'Couriers are bound to full discretion. Violation ends employment immediately.',
   },
   {
     title: 'Payment',
@@ -53,7 +53,7 @@ export function About() {
           Anonymous by design.
         </h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '16px', marginBottom: 48, lineHeight: 1.7 }}>
-          naughtyrose69 exists to let you express what words can't carry — safely, anonymously, physically.
+          naughtyrose exists to let you express what words can't carry — safely, anonymously, physically.
         </p>
 
         <div>

@@ -285,7 +285,12 @@ function Step5({ onSubmit, onBack, loading }: { onSubmit: () => void; onBack: ()
         <button className="btn btn-ghost" onClick={onBack} id="step6-back">Back</button>
         <button
           className="btn btn-rose"
-          onClick={onSubmit}
+          onClick={() => {
+            const confirmed = window.confirm("Please confirm:\n1. You have indeed paid via Telebirr.\n2. You have sent the payment screenshot to our WhatsApp (0992496445).");
+            if (confirmed) {
+              onSubmit();
+            }
+          }}
           disabled={!/^09\d{8}$/.test(senderPhone) || loading}
           id="step6-submit"
         >

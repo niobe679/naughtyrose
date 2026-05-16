@@ -11,7 +11,7 @@ export function Footer() {
         <Link to="/admin" className="footer-link">Admin</Link>
       </div>
       <p className="footer-copy">
-        © 2025 naughtyrose69 — Anonymous deliveries. Identities never revealed.
+        © 2025 naughtyrose — Anonymous deliveries. Identities never revealed.
       </p>
     </footer>
   );

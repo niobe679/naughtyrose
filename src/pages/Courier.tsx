@@ -61,7 +61,7 @@ export function Courier() {
             { icon: '💰', label: '100 birr per delivery', desc: 'Verified payouts weekly' },
             { icon: '📅', label: 'Fridays only', desc: 'Flexible, predictable schedule' },
             { icon: '🔒', label: 'Full discretion', desc: 'Identities always protected' },
-            { icon: '📸', label: 'Photo confirmation', desc: 'Simple proof upload system' },
+            { icon: '📸', label: 'Photo confirmation', desc: 'Simple proof upload to whatsapp' },
           ].map((b, i) => (
             <motion.div
               key={i}
