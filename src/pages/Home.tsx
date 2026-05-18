@@ -114,7 +114,7 @@ export function Home() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <p className="hero-eyebrow" style={{ marginBottom: 16 }}>A rose. A thorn. A prank.</p>
+          <p className="hero-eyebrow" style={{ marginBottom: 16 }}>A rose. A thorn.</p>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px, 4vw, 46px)', marginBottom: 24, fontWeight: 700 }}>
             Which one are you holding?
           </h2>

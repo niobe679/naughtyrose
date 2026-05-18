@@ -8,6 +8,9 @@ import { Courier } from './pages/Courier';
 import { About } from './pages/About';
 import { Admin } from './pages/Admin';
 import './index.css';
+import { Analytics } from '@vercel/analytics/react';
+
+//import { Analytics } from "@vercel/analytics/next"
 
 export default function App() {
   return (
@@ -22,6 +25,7 @@ export default function App() {
         <Route path="/HandNadmins" element={<Admin />} />
       </Routes>
       <Footer />
+      <Analytics />
     </BrowserRouter>
   );
 }
