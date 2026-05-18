@@ -7,7 +7,6 @@ const DEMO_DROPS: Drop[] = [
   { type: 'thorn', campus: 'EIABC', location: 'Cafeteria', deliveredAt: null },
   { type: 'rose', campus: 'UNITY Campus', location: 'Gate', deliveredAt: null },
   { type: 'thorn', campus: 'AAU 4 ⚖️', location: 'Classroom Building', deliveredAt: null },
-  { type: 'prank', campus: 'AAU 5 ⚖️', location: 'Phone Call', deliveredAt: null },
   { type: 'rose', campus: 'AAU 6 ⚖️', location: 'Cafeteria', deliveredAt: null },
   { type: 'thorn', campus: 'UNITY Campus', location: 'Gate', deliveredAt: null },
   { type: 'rose', campus: 'EIABC', location: 'Custom Meet Point', deliveredAt: null },
@@ -25,7 +24,7 @@ function timeAgo(index: number) {
 export function Feed() {
   const [drops, setDrops] = useState<Drop[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<'all' | 'rose' | 'thorn' | 'prank'>('all');
+  const [filter, setFilter] = useState<'all' | 'rose' | 'thorn'>('all');
 
   useEffect(() => {
     (async () => {
@@ -54,19 +53,19 @@ export function Feed() {
           <p className="section-title">Public Feed</p>
           <h1 className="section-heading">Drops</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginBottom: '28px' }}>
-            Roses. Thorns. Pranks. No identities.
+            Roses. Thorns. No identities.
           </p>
 
           {/* Filter tabs */}
           <div style={{ display: 'flex', gap: 8, marginBottom: 28, flexWrap: 'wrap' }}>
-            {(['all', 'rose', 'thorn', 'prank'] as const).map(f => (
+            {(['all', 'rose', 'thorn'] as const).map(f => (
               <button
                 key={f}
                 onClick={() => setFilter(f)}
                 className={`admin-tab ${filter === f ? 'active' : ''}`}
                 id={`feed-filter-${f}`}
               >
-                {f === 'all' ? 'All Drops' : f === 'rose' ? '🌹 Roses' : f === 'thorn' ? '🥀 Thorns' : '🎭 Pranks'}
+                {f === 'all' ? 'All Drops' : f === 'rose' ? '🌹 Roses' : f === 'thorn' ? '🥀 Thorns' : ''}
               </button>
             ))}
           </div>
@@ -91,7 +90,7 @@ export function Feed() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: i * 0.04 }}
               >
-                <span className="drop-badge">{d.type === 'rose' ? '🌹' : d.type === 'thorn' ? '🥀' : '🎭'}</span>
+                <span className="drop-badge">{d.type === 'rose' ? '🌹' : d.type === 'thorn' ? '🥀' : ''}</span>
                 <div className="drop-info">
                   <p className="drop-label">
                     <strong>{d.type.charAt(0).toUpperCase() + d.type.slice(1)} delivered</strong>
