@@ -38,7 +38,7 @@ export function Home() {
           </motion.p>
 
           <motion.h1 className="hero-title" {...fadeUp(0.1)}>
-            A rose.<br />A thorn.<br />Or a <em>prank.</em>
+            A rose.<br />A thorn.<br />
           </motion.h1>
 
           <motion.p className="hero-sub" {...fadeUp(0.2)}>
