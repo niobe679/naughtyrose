@@ -86,7 +86,7 @@ export function Home() {
         <div className="container">
           <p className="section-title">Recent Drops</p>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 24 }}>
-            <h2 className="section-heading" style={{ marginBottom: 0 }}>Roses. Thorns. Pranks.</h2>
+            <h2 className="section-heading" style={{ marginBottom: 0 }}>Roses. Thorns.</h2>
             <Link to="/feed" className="btn btn-ghost" style={{ padding: '10px 20px', fontSize: '12px' }}>
               See all <ArrowRight size={14} />
             </Link>
@@ -94,11 +94,11 @@ export function Home() {
 
           <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', textAlign: 'center', marginTop: '40px', flexWrap: 'wrap' }}>
             <div style={{ padding: '30px', background: 'rgba(255, 42, 95, 0.1)', borderRadius: '16px', flex: '1 1 200px' }}>
-              <h3 style={{ fontSize: '48px', color: 'var(--rose-bright)' }}>1,492</h3>
+              <h3 style={{ fontSize: '48px', color: 'var(--rose-bright)' }}>12</h3>
               <p style={{ color: 'var(--text-muted)' }}>Roses Delivered</p>
             </div>
             <div style={{ padding: '30px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '16px', flex: '1 1 200px' }}>
-              <h3 style={{ fontSize: '48px', color: '#888' }}>847</h3>
+              <h3 style={{ fontSize: '48px', color: '#888' }}>7</h3>
               <p style={{ color: 'var(--text-muted)' }}>Thorns Delivered</p>
             </div>
           </div>

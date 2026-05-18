@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import mascotLogo from '../../assets/naughtyrose-mascot.jpg';
+import mascotLogo from '../../assets/naughtyrose-mascot3.png';
 
 export function Navbar() {
   const [open, setOpen] = useState(false);

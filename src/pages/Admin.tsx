@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getOrders, getCouriers, updateOrderStatus, updateCourierStatus, type Order, type Courier, type OrderStatus } from '../lib/firestore';
 
 const ADMIN_PASSWORD = 'naughtyrose2025';
@@ -18,6 +18,7 @@ export function Admin() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [couriers, setCouriers] = useState<Courier[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const loadData = async () => {
     setLoading(true);
@@ -151,7 +152,7 @@ export function Admin() {
               </thead>
               <tbody>
                 {orders.map(o => (
-                  <tr key={o.id}>
+                  <tr key={o.id} onClick={() => setSelectedOrder(o)} style={{ cursor: 'pointer' }} className="clickable-row">
                     <td style={{ fontFamily: 'monospace', fontSize: 12 }}>
                       <div title={o.prankMessage ? `Prank Message: ${o.prankMessage}` : ''}>{o.id}</div>
                     </td>
@@ -172,6 +173,7 @@ export function Admin() {
                         style={{ padding: '6px 10px', fontSize: 12, width: 'auto' }}
                         value={o.status}
                         onChange={e => changeStatus(o.id!, e.target.value as OrderStatus)}
+                        onClick={e => e.stopPropagation()}
                         id={`order-status-${o.id}`}
                       >
                         {(['pending', 'confirmed', 'assigned', 'delivered', 'retry', 'refunded'] as OrderStatus[]).map(s => (
@@ -269,6 +271,70 @@ export function Admin() {
           </div>
         )}
       </motion.div>
+
+      <AnimatePresence>
+        {selectedOrder && (
+          <div className="modal-overlay" onClick={() => setSelectedOrder(null)} style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 20 }}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              onClick={e => e.stopPropagation()}
+              className="form-card"
+              style={{ width: '100%', maxWidth: 600, maxHeight: '90vh', overflowY: 'auto', backgroundColor: '#110508', border: '1px solid rgba(255,20,80,0.2)' }}
+            >
+              <h2 className="form-title" style={{ marginBottom: 20 }}>Order Details: {selectedOrder.id}</h2>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', fontSize: 14 }}>
+                <div><strong>Type:</strong> {selectedOrder.type === 'rose' ? '🌹' : selectedOrder.type === 'thorn' ? '🥀' : '🎭'} {selectedOrder.type}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <strong>Status:</strong>
+                  <select
+                    className="input-field"
+                    style={{ padding: '4px 8px', fontSize: 12, width: 'auto', margin: 0 }}
+                    value={selectedOrder.status}
+                    onChange={e => {
+                      const newStatus = e.target.value as OrderStatus;
+                      changeStatus(selectedOrder.id!, newStatus);
+                      setSelectedOrder({ ...selectedOrder, status: newStatus });
+                    }}
+                  >
+                    {(['pending', 'confirmed', 'assigned', 'delivered', 'retry', 'refunded'] as OrderStatus[]).map(s => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+                <div><strong>Recipient Name:</strong> {selectedOrder.recipientName}</div>
+                <div><strong>Recipient Phone:</strong> {selectedOrder.recipientPhone || 'N/A'}</div>
+                <div><strong>Sender Phone:</strong> {selectedOrder.senderPhone}</div>
+                <div><strong>Payment Ref:</strong> <span style={{ fontFamily: 'monospace' }}>{selectedOrder.paymentRef}</span></div>
+                <div><strong>Delivery Method:</strong> {selectedOrder.deliveryMethod === 'phone_call' ? '📞 Phone Call' : '🚶 In-person'}</div>
+                <div><strong>Campus:</strong> {selectedOrder.campus}</div>
+                <div><strong>Day & Time:</strong> {selectedOrder.deliveryDay} ({selectedOrder.timeWindow})</div>
+              </div>
+              
+              <div style={{ marginTop: 24 }}>
+                <strong>Exact Location & Details:</strong>
+                <div style={{ marginTop: 8, padding: 16, backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: 8, whiteSpace: 'pre-wrap', lineHeight: 1.5, color: 'var(--text-muted)' }}>
+                  {selectedOrder.location || 'No location provided.'}
+                </div>
+              </div>
+
+              {selectedOrder.prankMessage && (
+                <div style={{ marginTop: 16 }}>
+                  <strong>Prank/Insult Message:</strong>
+                  <div style={{ marginTop: 8, padding: 16, backgroundColor: 'rgba(255,0,0,0.05)', border: '1px solid rgba(255,0,0,0.2)', borderRadius: 8, whiteSpace: 'pre-wrap', lineHeight: 1.5, color: 'var(--text-muted)' }}>
+                    {selectedOrder.prankMessage}
+                  </div>
+                </div>
+              )}
+
+              <div style={{ marginTop: 32, display: 'flex', justifyContent: 'flex-end' }}>
+                <button className="btn btn-ghost" onClick={() => setSelectedOrder(null)}>Close</button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
