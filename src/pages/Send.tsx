@@ -267,7 +267,7 @@ function Step5({ onSubmit, onBack, loading }: { onSubmit: () => void; onBack: ()
         <label className="label">Your Payment Reference</label>
         <div className="payment-ref-box">{paymentRef}</div>
         <p style={{ fontSize: 11, color: 'var(--text-dim)', marginTop: 6 }}>
-          Include this reference when sending payment on Telebirr.
+          Take a screenshot of this page to keep copy of your order.
         </p>
       </div>
 
