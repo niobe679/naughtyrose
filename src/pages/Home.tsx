@@ -38,7 +38,7 @@ export function Home() {
           </motion.p>
 
           <motion.h1 className="hero-title" {...fadeUp(0.1)}>
-            A rose.<br />A thorn.<br />
+            A rose.<br />A thorn.<br />A prank.<br />
           </motion.h1>
 
           <motion.p className="hero-sub" {...fadeUp(0.2)}>
@@ -52,11 +52,11 @@ export function Home() {
             <Link to="/send?item=thorn" className="btn btn-thorn" id="hero-send-thorn">
               🥀 Send a Thorn
             </Link>
-            {/* PRANK FEATURE ACTIVATION PENDING
+            {/* PRANK FEATURE ACTIVATION PENDING */}
             <Link to="/send?item=prank" className="btn btn-ghost" id="hero-send-prank" style={{ borderColor: 'rgba(138,43,226,0.5)', color: '#b683e6' }}>
               🎭 Send a Prank
             </Link>
-            */}
+
           </motion.div>
         </div>
       </section>
@@ -100,6 +100,10 @@ export function Home() {
             <div style={{ padding: '30px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '16px', flex: '1 1 200px' }}>
               <h3 style={{ fontSize: '48px', color: '#888' }}>7</h3>
               <p style={{ color: 'var(--text-muted)' }}>Thorns Delivered</p>
+            </div>
+            <div style={{ padding: '30px', background: 'rgba(52, 97, 132, 0.05)', borderRadius: '16px', flex: '1 1 200px' }}>
+              <h3 style={{ fontSize: '48px', color: '#41ea9eff' }}>3</h3>
+              <p style={{ color: 'var(--text-muted)' }}>Pranks Delivered</p>
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@ function timeAgo(index: number) {
 export function Feed() {
   const [drops, setDrops] = useState<Drop[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<'all' | 'rose' | 'thorn'>('all');
+  const [filter, setFilter] = useState<'all' | 'rose' | 'thorn' | 'prank'>('all');
 
   useEffect(() => {
     (async () => {
@@ -53,7 +53,7 @@ export function Feed() {
           <p className="section-title">Public Feed</p>
           <h1 className="section-heading">Drops</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginBottom: '28px' }}>
-            Roses. Thorns. No identities.
+            Roses. Thorns. Pranks. No identities.
           </p>
 
           {/* Filter tabs */}

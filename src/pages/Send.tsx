@@ -54,7 +54,7 @@ function Step1({ onNext }: { onNext: () => void }) {
           <div className="choice-title">Thorn</div>
           <div className="choice-desc">For someone who caused you pain.</div>
         </motion.div>
-        {/* PRANK FEATURE ACTIVATION PENDING
+        {/* PRANK FEATURE ACTIVATION PENDING */}
         <motion.div
           className={`choice-card prank-card ${type === 'prank' ? 'selected' : ''}`}
           onClick={() => setType('prank')}
@@ -67,7 +67,7 @@ function Step1({ onNext }: { onNext: () => void }) {
           <div className="choice-title">Prank</div>
           <div className="choice-desc">A written insult delivered in-person or via phone call.</div>
         </motion.div>
-        */}
+
       </div>
       <div className="form-actions" style={{ marginTop: 28 }}>
         <button
